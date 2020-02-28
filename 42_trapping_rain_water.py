@@ -180,11 +180,13 @@ class Solution3(object): # LeetCode Approach 3: Using stacks (Accepted)
 
         for i in range(0, len(height)):
             while len(stack) > 0 and height[i] > height[stack[-1]]:
-                # being in this loop indicates the current index might store water
-                # storing water requires being bounded by two bars (one on each side)
-                # hence, accumulating water requires len(stack) > 1
-                # len(stack) = 1 indicates a slope that does not store water and we can discard accordingly
-
+                """
+                Entering this loop indicates the current index might store water.
+                Storing water requires being bounded by two bars (one on each side).
+                Hence, accumulating water requires len(stack) > 1.
+                len(stack) = 1 indicates a slope that does not store water and we can discard accordingly
+                """
+                
                 top = stack.pop()
                 if len(stack) > 0:
                     distance = i-stack[-1]-1
@@ -199,6 +201,56 @@ class Solution3(object): # LeetCode Approach 3: Using stacks (Accepted)
         - Time: O(n)
         - Space: O(n)
         """
+
+class Solution4(object): # LeetCode Approach 4: Using Two Pointers (Accepted)
+    def trap(self, height: List[int]) -> int:
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+
+        N = len(height)
+
+        if height is None or N is 0:
+            return 0
+    
+        water = 0
+
+        left, right = 0, N-1
+        left_max, right_max = 0, 0
+
+        """
+        Starting from both ends of the array,
+        increamentally accumulate bounded water
+        by storing the max height from each direction and
+        only accumulating when the height of the current (inner) bar
+        is less than the height of the max (outer) bar
+        for reach side respectively.
+        """
+
+        while left < right:
+            if height[left] < height[right]:
+                if height[left] >= left_max:
+                    left_max = height[left]
+                else:
+                    water += left_max - height[left]
+                left += 1
+
+            else:
+                if height[right] >= right_max:
+                    right_max = height[right]
+                else:
+                    water += right_max - height[right]
+                right -= 1
+
+        return water
+        """
+        Analysis:
+        - Time: O(n)
+        - Space: O(1)
+        """
+        
+
 
 ### TEST CODE ###
 
