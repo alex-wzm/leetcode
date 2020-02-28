@@ -1,5 +1,30 @@
 from typing import List
-        
+
+class Solution2: # Accepted
+    def maxProfit(self, prices: List[int]) -> int:
+
+        if len(prices) < 1:
+            return 0
+
+        max_profit_so_far = 0
+        min_buy_so_far = max(prices)
+
+        for i, price in enumerate(prices):
+            # if price < min_buy_so_far then update min_buy_so_far
+            # this is not an opportunity to calculate max_profit
+            if price < min_buy_so_far:
+                min_buy_so_far = price
+            # if not updating min_buy_so_far then calculate potential max_profit
+            else:
+                max_profit_so_far = max(max_profit_so_far, price - min_buy_so_far)
+
+        return max_profit_so_far
+        """
+        Analysis:
+        - Time: O(n)
+        - Space: O(1)
+        """
+
 class Solution1: # Time Limit Exceeded
     def maxProfit(self, prices: List[int]) -> int:
 
