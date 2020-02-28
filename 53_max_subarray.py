@@ -1,8 +1,8 @@
 from typing import List
 
-class Solution:
+class Solution: # ACCEPTED
     def maxSubArray(self, nums: List[int]) -> int:
-        
+
         # init output to min_value and
         # init accumulator "current_max"
         max_so_far = float('-inf')
@@ -29,8 +29,9 @@ class Solution:
         """
         
 
-# class Solution:
+# class Solution: # WRONG ANSWER
 #     def maxSubArray(self, nums: List[int]) -> int:
+
 
 #         # base case
 #         if len(nums) == 1:
