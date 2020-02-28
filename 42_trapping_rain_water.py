@@ -166,6 +166,40 @@ class Solution2(object): # LeetCode Approach 2: Dynamic Programming (Accepted)
         - Space: O(n)
         """
 
+class Solution3(object): # LeetCode Approach 3: Using stacks (Accepted)
+    def trap(self, height: List[int]) -> int:
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+
+        water = 0
+
+        # stack stores bounded bars that might enclose water
+        stack = []
+
+        for i in range(0, len(height)):
+            while len(stack) > 0 and height[i] > height[stack[-1]]:
+                # being in this loop indicates the current index might store water
+                # storing water requires being bounded by two bars (one on each side)
+                # hence, accumulating water requires len(stack) > 1
+                # len(stack) = 1 indicates a slope that does not store water and we can discard accordingly
+
+                top = stack.pop()
+                if len(stack) > 0:
+                    distance = i-stack[-1]-1
+                    bounded_height = min(height[i],height[stack[-1]]) - height[top]
+                    water += distance*bounded_height
+
+            stack.append(i)
+
+        return water
+        """
+        Analysis:
+        - Time: O(n)
+        - Space: O(n)
+        """
+
 ### TEST CODE ###
 
 s = Solution2()
