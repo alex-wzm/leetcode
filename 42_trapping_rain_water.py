@@ -124,10 +124,51 @@ class Solution1(object): # LeetCode Approach 1: Brute force (Time Limit Exceeded
         - Time: O(n^2)
         - Space: O(1)
         """
- 
+
+class Solution2(object): # LeetCode Approach 2: Dynamic Programming (Accepted)
+    def trap(self, height: List[int]) -> int:
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+
+        N = len(height)
+
+        if height is None or N is 0:
+            return 0
+    
+        water = 0
+
+        # init stores for the heighest bounding bars from the left and right direction
+        # fill with 0 (input is non-negative)
+        left_max, right_max = [0]*N, [0]*N
+
+        # init heights of first and last indices
+        left_max[0] = height[0]
+        right_max[N - 1] = height[N - 1]
+
+        # storing max while iterating from left
+        for i in range(1,N):
+            left_max[i] = max(height[i], left_max[i - 1])
+
+        # storing max while iterating from right
+        for i in range(N-2,0,-1):
+            right_max[i] = max(height[i], right_max[i + 1])
+
+        # accumulate by summing difference between current and min of left and right bounds
+        for i in range(1, N-1):
+            water += min(left_max[i], right_max[i]) - height[i]
+
+        return water
+        """
+        Analysis:
+        - Time: O(n)
+        - Space: O(n)
+        """
+
 ### TEST CODE ###
 
-s = Solution1()
+s = Solution2()
 
 test_cases = [
     (0, []),
