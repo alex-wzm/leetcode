@@ -1,4 +1,4 @@
-# README
+# My LeetCode Repo
 
 This is a repo for my attempts at (and eventual solutions to) leetcode problems.
 
