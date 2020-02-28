@@ -7,40 +7,69 @@ class Solution(object):
         
         water = 0
         latest_end = 0
-
-        for i, h1 in enumerate(height):
+        
+        for i in range(0, len(height)-1):
             if(i < latest_end):
-                print(f"skipping i: {i}")
                 continue
-            print(f"computing i: {i}")
-            if h1 > 0:
-                largest_so_far, largest_so_far_index = 0, -1 # in case there's no j s.t. height[j] >= height[i]
-                for j, h2 in enumerate(height[i+1:-1]):
-                    if h2 >= largest_so_far:
-                        largest_so_far = h2
-                        largest_so_far_index = j
-                    if h2 >= h1:
-                        print(f"============ height[{i+j+1}]:{h2} >= height[{i}]:{h1} ============")
-                        volume = self.sum_volume(height, i, h1, i+j+1, h2)
-                        print(f"volume: {volume}") # sum volume between h1 and h2
-                        water += volume
-                        latest_end = i+j+1
-                        break
-
+            volume = 0
+            for j in range(i+1, len(height)):
+                if height[j] < height[i]:
+                    volume += (height[i]-height[j])
+                if height[j] >= height[i]:
+                    # print(f"j height[{j}]:{height[j]} >= height[{i}]:{height[i]}")
+                    # print(f"volume from {i} to {j} is {volume}")
+                    water += volume
+                    # print(f"total water is {water}")
+                    latest_end = j
+                    break
+        
         return water
+            
 
-    def sum_volume(self, height, i, h1, j, h2):
-        smaller = min(h1, h2)
-        volume = 0
+        
+# class Solution(object):
+#     def trap(self, height):
+#         """
+#         :type height: List[int]
+#         :rtype: int
+#         """
+        
+#         water = 0
+#         latest_end = 0
 
-        # TODO: check if there's a trough for water to collect
-        #       i.e. height must first decrease then increase
-        #       AND height cannot be strictly descrings or increasing
+#         for i, h1 in enumerate(height):
+#             if(i < latest_end):
+#                 print(f"skipping i: {i}")
+#                 continue
+#             print(f"computing i: {i}")
+#             if h1 > 0:
+#                 largest_so_far, largest_so_far_index = 0, -1 # in case there's no j s.t. height[j] >= height[i]
+#                 for j, h2 in enumerate(height[i+1:-1]):
+#                     if h2 >= largest_so_far:
+#                         largest_so_far = h2
+#                         largest_so_far_index = j
+#                     if h2 >= h1:
+#                         print(f"============ height[{i+j+1}]:{h2} >= height[{i}]:{h1} ============")
+#                         volume = self.sum_volume(height, i, h1, i+j+1, h2)
+#                         print(f"volume: {volume}") # sum volume between h1 and h2
+#                         water += volume
+#                         latest_end = i+j+1
+#                         break
 
-        for idx in range(i+1, j):
-            volume += smaller - height[idx]
+#         return water
 
-        return volume
+#     def sum_volume(self, height, i, h1, j, h2):
+#         smaller = min(h1, h2)
+#         volume = 0
+
+#         # TODO: check if there's a trough for water to collect
+#         #       i.e. height must first decrease then increase
+#         #       AND height cannot be strictly descrings or increasing
+
+#         for idx in range(i+1, j):
+#             volume += smaller - height[idx]
+
+#         return volume
 
       
 ### TEST CODE ###
@@ -49,6 +78,7 @@ s = Solution()
 
 test_cases = [
     (6, [0,1,0,2,1,0,1,3,2,1,2,1]),
+    (1, [4,2,3]),
     (94, [9,0,1,0,2,1,0,1,3,2,1,2,1,9]),
     (0, [9,8,7,6,5]),
     (0, [5,6,7,8,9]),
