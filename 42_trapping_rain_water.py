@@ -4,6 +4,8 @@ class Solution(object):
         :type height: List[int]
         :rtype: int
         """
+
+        print(f"### processing {height}")
         
         water = 0
         latest_end = 0
@@ -12,14 +14,28 @@ class Solution(object):
             if(i < latest_end):
                 continue
             volume = 0
+            is_increasing = False
             for j in range(i+1, len(height)):
                 if height[j] < height[i]:
                     volume += (height[i]-height[j])
                 if height[j] >= height[i]:
-                    # print(f"j height[{j}]:{height[j]} >= height[{i}]:{height[i]}")
-                    # print(f"volume from {i} to {j} is {volume}")
+                    print(f"j height[{j}]:{height[j]} >= height[{i}]:{height[i]}")
+                    print(f"volume from {i} to {j} is {volume}")
                     water += volume
-                    # print(f"total water is {water}")
+                    print(f"total water is {water}")
+                    latest_end = j
+                    break
+
+                if height[j] > height[j-1]:
+                    is_increasing = True
+                elif height[j] < height[j-1]:
+                    is_increasing = False
+                    
+                if j == len(height)-1 and is_increasing:
+                    print(f"end of list: height[{i}]:{height[i]}, height[{j}]:{height[j]}")
+                    reversed_sublist = height[i:j+1]
+                    reversed_sublist.reverse()
+                    water += self.trap(reversed_sublist)
                     latest_end = j
                     break
         
@@ -79,6 +95,9 @@ s = Solution()
 test_cases = [
     (6, [0,1,0,2,1,0,1,3,2,1,2,1]),
     (1, [4,2,3]),
+    (1, [4,2,3,3]),
+    (1, [5,4,1,2]),
+    (1, [2,1,4,5]),
     (94, [9,0,1,0,2,1,0,1,3,2,1,2,1,9]),
     (0, [9,8,7,6,5]),
     (0, [5,6,7,8,9]),
