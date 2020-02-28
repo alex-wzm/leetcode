@@ -97,10 +97,37 @@ class MySolution2(object): # WRONG
             volume += smaller - height[idx]
 
         return volume
-      
+
+class Solution1(object): # LeetCode Approach 1: Brute force (Time Limit Exceeded)
+    def trap(self, height: List[int]) -> int:
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+
+        water = 0
+        
+        for i in range(len(height)):
+            max_left, max_right = height[0], height[-1]
+
+            for j in range(i,0,-1):
+                max_left = max(max_left, height[j])
+            
+            for j in range(i,len(height)):
+                max_right = max(max_right, height[j])
+
+            water += min(max_left, max_right) - height[i]
+
+        return water
+        """
+        Analysis:
+        - Time: O(n^2)
+        - Space: O(1)
+        """
+ 
 ### TEST CODE ###
 
-s = MySolution1()
+s = Solution1()
 
 test_cases = [
     (0, []),
