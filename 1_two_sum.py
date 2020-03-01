@@ -9,14 +9,13 @@ class Solution2: # Accepted
         # so appending indices of duplicates is easier
         hash_table = defaultdict(list)
 
-        # populate hash table
         for i, n in enumerate(nums):
+            # populate hash table
             hash_table[n].append(i)
+            print(hash_table)
 
-        # iterate through list searching hash table for compliment
-        # this is safe because a target pair is guaranteed
-        for i, n in enumerate(nums):
             if target - n in hash_table:
+                print(f'{target} - {n} ({target - n}) in hash_table: {hash_table[target - n]}')
                 # when compliment is found, search for non-duplicate element
                 # by ensuring indices are different
                 for j in hash_table[target - n]:
@@ -49,7 +48,7 @@ class Solution1: # Time Limit Exceeded
 
 ### TEST CODE ###
 
-s = Solution2()
+s = Solution3()
 
 test_cases = [
     ([0,1], ([1,1,2], 2)),
