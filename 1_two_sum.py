@@ -3,6 +3,11 @@ from collections import defaultdict
 
 class Solution2: # Accepted
     def twoSum(self, nums: List[int], target: int) -> List[int]:
+        """
+        Analysis:
+        - Time: O(n)
+        - Space: O(n)
+        """
 
         # init hash table to store indices of elements by value
         # using defaultdict to init values as list types
@@ -10,10 +15,6 @@ class Solution2: # Accepted
         hash_table = defaultdict(list)
 
         for i, n in enumerate(nums):
-            # populate hash table
-            hash_table[n].append(i)
-            print(hash_table)
-
             if target - n in hash_table:
                 print(f'{target} - {n} ({target - n}) in hash_table: {hash_table[target - n]}')
                 # when compliment is found, search for non-duplicate element
@@ -21,12 +22,10 @@ class Solution2: # Accepted
                 for j in hash_table[target - n]:
                     if i != j:
                         return [i, j]
-                        """
-                        Analysis:
-                        - Time: O(n)
-                        - Space: O(n)
-                        """
 
+            # populate hash table
+            hash_table[n].append(i)
+            print(hash_table)
 
         
 class Solution1: # Time Limit Exceeded
