@@ -9,9 +9,16 @@ class ListNode:
 
 class Solution: # Accepted
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+        """
+        NOTE: Representing input numbers as int[] and str allows us to 
+            conveniently type-cast in order to take advantage of
+            Pythonic syntactic sugar to execute addition operation.
+        """
 
+        # init list to represent numbers extracted from linked list
         int1, int2 = [], []
         
+        # extract numbers from linked lists
         while True:
             int1.append(l1.val)
             if l1.next is None:
@@ -24,21 +31,24 @@ class Solution: # Accepted
                 break
             l2 = l2.next
 
+        # init strings to represent numbers
         str1, str2 = '', ''
 
+        # compile number as string
         for i in int1[::-1]:
             str1 += str(i)
 
         for i in int2[::-1]:
             str2 += str(i)
 
-        print(str1)
-        print(str2)
-
+        # compute result by casting str representations to int
         ans = int(str1) + int(str2)
 
+        # init ouput as None because final ListNode.next must == None
+        # according to given ListNode definition
         output = None
 
+        # iteratively construct output as linked list ListNode
         for i in str(ans):
             new_node = ListNode(i)
             new_node.next = output
