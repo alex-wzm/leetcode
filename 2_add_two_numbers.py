@@ -10,39 +10,26 @@ class ListNode:
 class Solution: # Accepted
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
         """
-        NOTE: Representing input numbers as int[] and str allows us to 
+        NOTE: Representing input numbers as strings allows us to 
             conveniently type-cast in order to take advantage of
             Pythonic syntactic sugar to execute addition operation.
         """
-
-        # init list to represent numbers extracted from linked list
-        int1, int2 = [], []
+        # init strings to represent numbers extracted from linked list
+        str1, str2 = '', ''
         
         # extract numbers from linked lists
-        while True:
-            int1.append(l1.val)
-            if l1.next is None:
-                break
+        # these strings will need to be reversed
+        while l1:
+            str1 += str(l1.val)
             l1 = l1.next
 
-        while True:
-            int2.append(l2.val)
-            if l2.next is None:
-                break
+        while l2:
+            str2 += str(l2.val)
             l2 = l2.next
 
-        # init strings to represent numbers
-        str1, str2 = '', ''
-
-        # compile number as string
-        for i in int1[::-1]:
-            str1 += str(i)
-
-        for i in int2[::-1]:
-            str2 += str(i)
-
-        # compute result by casting str representations to int
-        ans = int(str1) + int(str2)
+        # reverse strings then compute result by casting str representations to int
+        # [::-1] is Python syntactic sugar for reversing lists (and strings)
+        ans = int(str1[::-1]) + int(str2[::-1])
 
         # init ouput as None because final ListNode.next must == None
         # according to given ListNode definition
