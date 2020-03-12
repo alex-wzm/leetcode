@@ -5,10 +5,12 @@ class Solution:
         output = ''
         is_negative = False
 
+        if not num:
+            return "0"
+
         if num < 0:
             num = -num
             is_negative = True
-
 
         while num > 0:
             output = str(num % 7)+output
