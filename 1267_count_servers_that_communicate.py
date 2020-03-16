@@ -1,4 +1,5 @@
 from typing import List
+import collections
 
 class Solution:
     def countServers(self, grid: List[List[int]]) -> int:
@@ -21,7 +22,19 @@ class Solution:
                         break
 
         return count_connected_servers
+        """Analysis
+        - time: O(n*m)
+        - space: O(n+m)
+        """
 
+
+class Solution2():
+    # super consise solution by user macheret
+    # from https://leetcode.com/problems/count-servers-that-communicate/discuss/538387/Python-3-1-line-faster-than-100
+    def countServers(self, grid: List[List[int]]) -> int:
+        computers = [(x, y) for y, row in enumerate(grid) for x, cell in enumerate(row) if cell]
+        cols, rows = map(collections.Counter, zip(*computers))
+        return sum(rows[y] > 1 or cols[x] > 1 for x, y in computers)
 
 ### TEST CODE ###
 
